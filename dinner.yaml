@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: diner
+  namespace: argocd
+spec:
+  destination:
+    namespace: dinner
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: 12factor
+    helm:
+      parameters:
+      - name: tld
+        value: user0.k8z.eu
+      - name: title
+        value: dinner
+      - name: color
+        value: red
+        
+    repoURL: https://chart.lalyo.sh
+    targetRevision: 0.1.4
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
